@@ -1,7 +1,6 @@
 <nav class="fixed top-0 left-0 right-0 bg-white border-gray-100 hover:bg-indigo-50 transition duration-500 z-50">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-
             {{-- Logo --}}
             <div class="flex items-center">
                 <a href="/" class="flex items-center gap-2">
@@ -152,7 +151,7 @@
                     Contact
                 </a>
             </div>
-            
+
             {{-- Right Side Icons --}}
             <div class="flex items-center gap-5">
 
