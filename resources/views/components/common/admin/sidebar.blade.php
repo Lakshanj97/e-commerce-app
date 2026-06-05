@@ -81,11 +81,24 @@
                     </a>
                 </div>
             </div>
+            <a href="#"
+                class="flex items-center space-x-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 group
+               {{ request()->routeIs('admin.products')
+                   ? 'bg-cyan-50 text-cyan-600 font-semibold'
+                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.products') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                <span>Products</span>
+            </a>
 
             <!-- Orders Link -->
             <a href="#"
                 class="flex items-center space-x-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 group
                {{ request()->routeIs('admin.orders') }}
+               {{ request()->routeIs('admin.orders')
                    ? 'bg-cyan-50 text-cyan-600 font-semibold'
                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.orders') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
@@ -95,6 +108,107 @@
                 </svg>
                 <span>Orders</span>
             </a>
+            <hr class="my-6 border-gray-200 dark:border-gray-700">
+            <div>
+                <h3 class="px-4 text-xs uppercase leading-[20px] text-gray-400 font-bold tracking-widest mb-2">
+                    Master Data</h3>
+                <div class="space-y-1">
+                    {{-- Company Profile Dropdown --}}
+                    <div x-data="{
+                        open: {{ request()->routeIs('admin.categories') ? 'true' : 'false' }}
+                    }">
+                        {{-- Dropdown Trigger --}}
+                        <button @click="open = !open"
+                            class="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                {{ request()->routeIs('admin.categories')
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <div class="flex items-center gap-3">
+                                {{-- Icon --}}
+                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M19.5 21V5.25A2.25 2.25 0 0 0 17.25 3h-10.5A2.25 2.25 0 0 0 4.5 5.25V21m15 0h-15M19.5 21h-15" />
+                                </svg>
+                                <span>Category</span>
+                            </div>
+                            {{-- Chevron --}}
+                            <svg class="w-4 h-4 shrink-0 transition-transform duration-200"
+                                :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        {{-- Dropdown Items --}}
+                        <div x-show="open" ... class="mt-1 ml-4 pl-4 border-l border-gray-200 space-y-1">
+                            <a wire:navigate href="{{ route('admin.categories.create') }}"
+                                class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors duration-150
+                    {{ request()->routeIs('admin.categories')
+                        ? 'bg-blue-50 text-blue-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                                Add category
+                            </a>
+                            <a wire:navigate href="{{ route('admin.categories.index') }}"
+                                class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors duration-150
+                    {{ request()->routeIs('admin.categories')
+                        ? 'bg-blue-50 text-blue-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                                View category
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+             <hr class="border-gray-200 " />
+            <div>
+                <h3 class="px-4 text-xs uppercase leading-[20px] text-gray-400 font-bold tracking-widest mb-2">
+                    Administration</h3>
+                <div class="space-y-1">
+                    {{-- Company Profile Dropdown --}}
+                    <div x-data="{
+                        open: {{ request()->routeIs('admin.company-profile') ? 'true' : 'false' }}
+                    }">
+                        {{-- Dropdown Trigger --}}
+                        <button @click="open = !open"
+                            class="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                {{ request()->routeIs('admin.company-profile')
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <div class="flex items-center gap-3">
+                                {{-- Icon --}}
+                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M19.5 21V5.25A2.25 2.25 0 0 0 17.25 3h-10.5A2.25 2.25 0 0 0 4.5 5.25V21m15 0h-15M19.5 21h-15" />
+                                </svg>
+                                <span>Company Profile</span>
+                            </div>
+                            {{-- Chevron --}}
+                            <svg class="w-4 h-4 shrink-0 transition-transform duration-200"
+                                :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        {{-- Dropdown Items --}}
+                        <div x-show="open" ... class="mt-1 ml-4 pl-4 border-l border-gray-200 space-y-1">
+                            <a wire:navigate href="{{ route('admin.company-profile') }}"
+                                class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors duration-150
+                    {{ request()->routeIs('admin.company-profile')
+                        ? 'bg-blue-50 text-blue-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </nav>
 
