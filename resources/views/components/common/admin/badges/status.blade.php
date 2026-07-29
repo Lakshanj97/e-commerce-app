@@ -53,7 +53,7 @@
             'text' => 'text-red-800',
             'dot' => 'bg-red-500',
             'label' => 'Rejected',
-        ],
+        ],  
 
     ];
 

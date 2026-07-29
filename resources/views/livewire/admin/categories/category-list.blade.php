@@ -27,9 +27,10 @@
 
         {{-- Search --}}
         <div class="p-5 border-b border-gray-100">
-
-            <x-common.admin.forms.search wire:model.live.debounce.300ms="search" placeholder="Search categories..." />
-
+            <x-common.admin.forms.search
+                wire:model.live.debounce.300ms="search"
+                placeholder="Search categories..."
+            />
         </div>
 
         {{-- Table --}}
@@ -62,20 +63,41 @@
                     @forelse($categories as $category)
                         <tr class="transition-colors hover:bg-gray-50">
 
+                            {{-- Category: Image + Name + Slug --}}
                             <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
 
-                                <div class="font-medium text-gray-800">
-                                    {{ $category->name }}
+                                    {{-- Thumbnail --}}
+                                    @if ($category->image)
+                                        <img
+                                            src="{{ Storage::url($category->image) }}"
+                                            alt="{{ $category->name }}"
+                                            class="w-10 h-10 rounded-lg object-cover border border-gray-200 flex-shrink-0"
+                                        />
+                                    @else
+                                        {{-- Placeholder with first letter --}}
+                                        <div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200
+                                                    flex items-center justify-center flex-shrink-0">
+                                            <span class="text-sm font-semibold text-gray-400 uppercase">
+                                                {{ substr($category->name, 0, 1) }}
+                                            </span>
+                                        </div>
+                                    @endif
+
+                                    <div class="min-w-0">
+                                        <div class="font-medium text-gray-800 truncate">
+                                            {{ $category->name }}
+                                        </div>
+                                        <div class="text-xs text-gray-400 truncate">
+                                            {{ $category->slug }}
+                                        </div>
+                                    </div>
+
                                 </div>
-
-                                <div class="text-xs text-gray-500">
-                                    {{ $category->slug }}
-                                </div>
-
                             </td>
 
+                            {{-- Parent Category --}}
                             <td class="px-6 py-4">
-
                                 @if ($category->parent)
                                     <span class="px-2 py-1 text-xs font-medium text-blue-700 rounded-full bg-blue-50">
                                         {{ $category->parent->name }}
@@ -85,32 +107,28 @@
                                         Main Category
                                     </span>
                                 @endif
-
                             </td>
 
+                            {{-- Status --}}
                             <td class="px-6 py-4">
-
                                 <x-common.admin.badges.status :status="$category->status ? 'active' : 'inactive'" />
-
                             </td>
 
+                            {{-- Actions --}}
                             <td class="px-6 py-4 text-right">
-
-                                <x-common.admin.tables.actions :editRoute="route('admin.categories.edit', $category)"
-                                    deleteAction="confirmDelete({{ $category->id }})" />
-
+                                <x-common.admin.tables.actions
+                                    :editRoute="route('admin.categories.edit', $category)"
+                                    deleteAction="confirmDelete({{ $category->id }})"
+                                />
                             </td>
 
                         </tr>
 
                     @empty
-
                         <tr>
-
                             <td colspan="4" class="px-6 py-12 text-center text-gray-500">
                                 No categories found.
                             </td>
-
                         </tr>
                     @endforelse
 
@@ -126,14 +144,14 @@
     </div>
 
     {{-- Delete Modal --}}
-   <x-common.admin.modals.delete-confirmation
-    :show="$deleteId"
-    title="Delete Department"
-    :item-name="$deleteName"
-    cancel-action="cancelDelete"
-    confirm-action="deleteCategory"
-    confirm-text="Delete"
-    loading-target="deleteCategory"
-/>
+    <x-common.admin.modals.delete-confirmation
+        :show="$deleteId"
+        title="Delete Category"
+        :item-name="$deleteName"
+        cancel-action="cancelDelete"
+        confirm-action="deleteCategory"
+        confirm-text="Delete"
+        loading-target="deleteCategory"
+    />
 
 </div>
