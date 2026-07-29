@@ -14,6 +14,8 @@
                     <div class="flex items-center gap-2 mb-1 text-sm text-gray-500">
                         <a wire:navigate href="{{ route('admin.categories.index') }}"
                             class="hover:text-blue-600">
+
+                        <a wire:navigate href="{{ route('admin.categories.index') }}" class="hover:text-blue-600">
                             Categories
                         </a>
                         <span>/</span>
@@ -45,13 +47,8 @@
                 <div class="space-y-5">
 
                     {{-- Name --}}
-                    <x-common.admin.forms.input
-                        label="Category Name"
-                        name="name"
-                        wire:model.blur="name"
-                        required
-                        placeholder="Enter category name"
-                    />
+                    <x-common.admin.forms.input label="Category Name" name="name" wire:model.blur="name" required
+                        placeholder="Enter category name" />
 
                     {{-- Slug --}}
                     <div>
@@ -107,6 +104,18 @@
                             Category Image
                             <span class="ml-1 text-xs font-normal text-gray-400">JPG, PNG, WebP · max 2 MB</span>
                         </label>
+                        <select wire:model="parent_id"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+
+                            <option value="">
+                                Main Category
+                            </option>
+
+                            @foreach ($parentCategories as $parent)
+                                <option value="{{ $parent->id }}">
+                                    {{ $parent->name }}
+                                </option>
+                            @endforeach
 
                         {{-- Existing image preview (edit mode) --}}
                         @if ($existingImage && !$removeImage)
@@ -200,6 +209,15 @@
                                 class="rounded border-gray-300"
                             >
                             <span class="text-sm font-medium text-gray-700">Active Category</span>
+
+                        <label class="inline-flex items-center gap-3 cursor-pointer">
+
+                            <input type="checkbox" wire:model="status" class="rounded border-gray-300">
+
+                            <span class="text-sm font-medium text-gray-700">
+                                Active Category
+                            </span>
+
                         </label>
                     </div>
 
@@ -220,6 +238,10 @@
                     class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                     <span wire:loading.remove wire:target="save">
+                <button type="submit"
+                    class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+
+                    <span wire:loading.remove>
                         {{ $categoryId ? 'Update Category' : 'Create Category' }}
                     </span>
                     <span wire:loading wire:target="save">

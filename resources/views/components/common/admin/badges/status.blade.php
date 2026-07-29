@@ -20,6 +20,20 @@
             'label' => 'Inactive',
         ],
 
+        'featured' => [
+            'bg' => 'bg-amber-50',
+            'text' => 'text-amber-800',
+            'dot' => 'bg-amber-500',
+            'label' => 'Featured',
+        ],
+
+        'notfeatured' => [
+            'bg' => 'bg-red-100',
+            'text' => 'text-red-800',
+            'dot' => 'bg-red-500',
+            'label' => 'Not Featured',
+        ],
+
         'instock' => [
             'bg' => 'bg-green-100',
             'text' => 'text-green-800',

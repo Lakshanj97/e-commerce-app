@@ -69,30 +69,18 @@
                     x-transition:leave="transition ease-in duration-75"
                     x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-95" style="display: none;">
-                    <a href="#"
+                    <a href="{{ route('admin.product.add-product') }}"
                         class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
-                    {{ request()->routeIs('admin.products.index') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+                    {{ request()->routeIs('admin.product.add-product') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
                         Add New Product
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.product.index') }}"
                         class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
-                    {{ request()->routeIs('admin.products.create') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+                    {{ request()->routeIs('admin.product.index') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
                         View All Products
                     </a>
                 </div>
             </div>
-            <a href="#"
-                class="flex items-center space-x-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 group
-               {{ request()->routeIs('admin.products')
-                   ? 'bg-cyan-50 text-cyan-600 font-semibold'
-                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.products') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-                <span>Products</span>
-            </a>
 
             <!-- Orders Link -->
             <a href="#"
@@ -158,7 +146,7 @@
                                 View category
                             </a>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

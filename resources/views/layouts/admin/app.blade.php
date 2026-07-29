@@ -9,6 +9,8 @@
     <title>Admin Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
 </head>
 
 <body class="bg-gray-100 font-sans antialiased" x-data="{ sidebarOpen: false }">
