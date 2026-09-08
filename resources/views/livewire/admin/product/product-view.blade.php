@@ -46,6 +46,11 @@
                 </div>
 
                 <div>
+                    <p class="text-xs text-gray-500 mb-1">Brand</p>
+                    <p class="text-sm text-gray-800 dark:text-white">{{ $product->brand->name ?? 'N/A' }}</p>
+                </div>
+
+                <div>
                     <p class="text-xs text-gray-500 mb-1">Short description</p>
                     <div class="text-sm text-gray-800 dark:text-white leading-relaxed prose prose-sm max-w-none">
                         {!! $product->short_description !!}

@@ -96,8 +96,11 @@
 
                             <td class="px-6 py-4 text-right">
 
-                                <x-common.admin.tables.actions :editRoute="route('admin.categories.edit', $category)"
-                                    deleteAction="confirmDelete({{ $category->id }})" />
+                                <x-common.admin.tables.actions
+
+                                :viewRoute="route('admin.categories.index', $category)"
+                                :editRoute="route('admin.categories.edit', $category)"
+                                deleteAction="confirmDelete({{ $category->id }})" />
 
                             </td>
 

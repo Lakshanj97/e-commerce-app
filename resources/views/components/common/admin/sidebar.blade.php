@@ -43,25 +43,26 @@
 
             <!-- Products Link -->
             <div class="relative items-center space-x-4" x-data="{ productMenuOpen: false }">
-                <a href="#"
-                    class="flex items-center space-x-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 group
-               {{ request()->routeIs('admin.products')
-                   ? 'bg-cyan-50 text-cyan-600 font-semibold'
-                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
-                    @click="productMenuOpen = !productMenuOpen">
-                    <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.products') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                    <span>Products</span>
-                    <svg class="hidden h-4 w-4 text-gray-500 dark:text-gray-400 md:block" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                <button @click="productMenuOpen = !productMenuOpen"
+                    class="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+           {{ request()->routeIs('admin.products')
+               ? 'bg-cyan-50 text-cyan-600 font-semibold'
+               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <div class="flex items-center gap-3">
+                        <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.products') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                        <span>Products</span>
+                    </div>
+                    <svg class="w-4 h-4 shrink-0 transition-transform duration-200"
+                        :class="productMenuOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </a>
+                </button>
 
-                {{-- Product Dropdown Menu --}}
                 <div x-show="productMenuOpen" @click.away="productMenuOpen = false" class="ml-8 mt-1 space-y-1"
                     x-transition:enter="transition ease-out duration-100"
                     x-transition:enter-start="transform opacity-0 scale-95"
@@ -71,25 +72,24 @@
                     x-transition:leave-end="transform opacity-0 scale-95" style="display: none;">
                     <a href="{{ route('admin.product.add-product') }}"
                         class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
-                    {{ request()->routeIs('admin.product.add-product') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+            {{ request()->routeIs('admin.product.add-product') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
                         Add New Product
                     </a>
                     <a href="{{ route('admin.product.index') }}"
                         class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
-                    {{ request()->routeIs('admin.product.index') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+            {{ request()->routeIs('admin.product.index') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
                         View All Products
                     </a>
                 </div>
             </div>
 
             <!-- Orders Link -->
-            <a href="#"
+            <a href="{{ route('admin.orders.index') }}"
                 class="flex items-center space-x-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 group
-               {{ request()->routeIs('admin.orders') }}
-               {{ request()->routeIs('admin.orders')
+               {{ request()->routeIs('admin.orders.*')
                    ? 'bg-cyan-50 text-cyan-600 font-semibold'
                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.orders') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
+                <svg class="h-5 w-5 transition-colors {{ request()->routeIs('admin.orders.*') ? 'text-cyan-600' : 'text-gray-400 group-hover:text-gray-600' }}"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -113,8 +113,7 @@
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                             <div class="flex items-center gap-3">
                                 {{-- Icon --}}
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                         d="M19.5 21V5.25A2.25 2.25 0 0 0 17.25 3h-10.5A2.25 2.25 0 0 0 4.5 5.25V21m15 0h-15M19.5 21h-15" />
                                 </svg>
@@ -149,8 +148,51 @@
 
                     </div>
                 </div>
+                <!-- Brand Link -->
+                <div class="relative items-center space-x-4" x-data="{ productMenuOpen: false }">
+                    <button @click="productMenuOpen = !productMenuOpen"
+                        class="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+           {{ request()->routeIs('admin.brands')
+               ? 'bg-cyan-50 text-cyan-600 font-semibold'
+               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-colors {{ request()->routeIs('admin.brands') ? 'text-cyan-600' : 'text-gray-700 group-hover:text-gray-600' }}"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+
+                            <span>Brands</span>
+                        </div>
+                        <svg class="w-4 h-4 shrink-0 transition-transform duration-200"
+                            :class="productMenuOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="productMenuOpen" @click.away="productMenuOpen = false" class="ml-8 mt-1 space-y-1"
+                        x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95" style="display: none;">
+                        <a href="{{ route('admin.brands.create') }}"
+                            class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
+            {{ request()->routeIs('admin.brands.create') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+                            Add New Brand
+                        </a>
+                        <a href="{{ route('admin.brands.index') }}"
+                            class="block rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900
+            {{ request()->routeIs('admin.brands.index') ? 'bg-cyan-50 text-cyan-600 font-semibold' : '' }}">
+                            View All Brands
+                        </a>
+                    </div>
+                </div>
             </div>
-             <hr class="border-gray-200 " />
+            <hr class="border-gray-200 " />
             <div>
                 <h3 class="px-4 text-xs uppercase leading-[20px] text-gray-400 font-bold tracking-widest mb-2">
                     Administration</h3>

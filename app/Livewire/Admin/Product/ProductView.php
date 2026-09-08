@@ -8,14 +8,17 @@ use Livewire\Component;
 class ProductView extends Component
 {
     public $product;
+
     public $deleteId = null;
+
     public $deleteName = '';
 
-    public function mount(Product $product) {
+    public function mount(Product $product)
+    {
         $this->product = $product;
     }
 
-     public function confirmDelete($id)
+    public function confirmDelete($id)
     {
         $product = Product::findOrFail($id);
 
@@ -44,6 +47,6 @@ class ProductView extends Component
     public function render()
     {
         return view('livewire.admin.product.product-view'
-                )->layout('layouts.admin.app');
+        )->layout('layouts.admin.app');
     }
 }

@@ -1,4 +1,4 @@
-@props(['editRoute', 'deleteAction', 'viewRoute'])
+@props(['editRoute', 'deleteAction', 'viewRoute' => null])
 
 <div class="flex items-center justify-end gap-1">
 
@@ -15,7 +15,7 @@
 
     <span class="text-gray-200 select-none">|</span>
 
-    
+
     {{-- Edit --}}
     <a wire:navigate href="{{ $editRoute }}" title="Edit"
         class="inline-flex px-2 py-1 text-xs font-semibold rounded-lg bg-indigo-100 text-indigo-800 hover:bg-indigo-200">

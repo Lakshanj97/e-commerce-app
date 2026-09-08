@@ -2,35 +2,42 @@
 
 namespace App\Livewire\Admin\CompanyProfile;
 
+use App\Models\CompanyProfile as CompanyProfileModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\CompanyProfile as CompanyProfileModel;
-use Illuminate\Support\Facades\Storage;
 
 class CompanyProfile extends Component
 {
     use WithFileUploads;
 
     public string $company_name = '';
-    public string $tax_number   = '';
-    public string $address      = '';
-    public string $phone        = '';
-    public string $email        = '';
+
+    public string $tax_number = '';
+
+    public string $address = '';
+
+    public string $phone = '';
+
+    public string $email = '';
+
     public mixed $logo = null;
 
     // Crop feature
     public $logo_path = null;
+
     public $logoPreview = null;
+
     public bool $showCropModal = false;
+
     public bool $showRemoveLogoConfirm = false;
 
     protected $listeners = [
         'open-crop-modal' => 'openCropModal',
     ];
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Crop Modal
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     public function openCropModal(): void
     {
         $this->showCropModal = true;
@@ -42,23 +49,25 @@ class CompanyProfile extends Component
         $url = $this->logoPreview
             ?? ($this->logo_path ? asset($this->logo_path) : null);
 
-        if (!$url) return;
+        if (! $url) {
+            return;
+        }
 
         $this->showCropModal = true;
         $this->dispatch('crop-modal-opened', url: $url);
     }
 
-    //-------------------------------------------------------------------------
-    //Takes an existing record from the database, or returns an empty Model Instance.
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Takes an existing record from the database, or returns an empty Model Instance.
+    // -------------------------------------------------------------------------
     private function getCompanySettings(): CompanyProfileModel
     {
-        return CompanyProfileModel::first() ?? new CompanyProfileModel();
+        return CompanyProfileModel::first() ?? new CompanyProfileModel;
     }
 
-    //-------------------------------------------------------------------------
-    //Update or Create new record
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Update or Create new record
+    // -------------------------------------------------------------------------
     private function updateCompanySettings(array $data): CompanyProfileModel
     {
         $settings = CompanyProfileModel::first();
@@ -72,34 +81,34 @@ class CompanyProfile extends Component
         return $settings;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Validation Rules
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     protected function rules(): array
     {
         return [
             'company_name' => 'nullable|string|max:255',
-            'tax_number'   => 'nullable|string|max:255',
-            'address'      => 'nullable|string|max:500',
-            'phone'        => 'nullable|string|max:20',
-            'email'        => 'nullable|email|max:255',
-            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'tax_number' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 
     // -------------------------------------------------------------------------
-    //Mount and Initialize
+    // Mount and Initialize
     // -------------------------------------------------------------------------
     public function mount(): void
     {
         $settings = $this->getCompanySettings();
 
         $this->company_name = $settings->company_name ?? '';
-        $this->tax_number   = $settings->tax_number   ?? '';
-        $this->address      = $settings->address      ?? '';
-        $this->phone        = $settings->phone        ?? '';
-        $this->email        = $settings->email        ?? '';
-        $this->logo_path    = $settings->logo_path    ?? null;
+        $this->tax_number = $settings->tax_number ?? '';
+        $this->address = $settings->address ?? '';
+        $this->phone = $settings->phone ?? '';
+        $this->email = $settings->email ?? '';
+        $this->logo_path = $settings->logo_path ?? null;
     }
 
     // -------------------------------------------------------------------------
@@ -133,15 +142,15 @@ class CompanyProfile extends Component
 
         // Save to public/images/logo/
         $dir = public_path('images/logo');
-        if (!file_exists($dir)) {
+        if (! file_exists($dir)) {
             mkdir($dir, 0755, true);
         }
 
-        $filename    = 'cropped_' . uniqid() . '.png';
-        $destination = $dir . '/' . $filename;
+        $filename = 'cropped_'.uniqid().'.png';
+        $destination = $dir.'/'.$filename;
         file_put_contents($destination, $imageData);
 
-        $this->logo_path   = 'images/logo/' . $filename;
+        $this->logo_path = 'images/logo/'.$filename;
         $this->logoPreview = asset($this->logo_path);
         $this->showCropModal = false;
     }
@@ -161,9 +170,9 @@ class CompanyProfile extends Component
             $settings->save();
         }
 
-        $this->logo_path             = null;
-        $this->logo                  = null;
-        $this->logoPreview           = null;
+        $this->logo_path = null;
+        $this->logo = null;
+        $this->logoPreview = null;
         $this->showRemoveLogoConfirm = false;
     }
 
@@ -176,10 +185,10 @@ class CompanyProfile extends Component
 
         $data = [
             'company_name' => $this->company_name,
-            'tax_number'   => $this->tax_number,
-            'address'      => $this->address,
-            'phone'        => $this->phone,
-            'email'        => $this->email,
+            'tax_number' => $this->tax_number,
+            'address' => $this->address,
+            'phone' => $this->phone,
+            'email' => $this->email,
         ];
 
         // Cropped image already saved — using logo_path
@@ -201,8 +210,8 @@ class CompanyProfile extends Component
     // -------------------------------------------------------------------------
     private function storeLogo(): string
     {
-        $dir         = public_path('images/logo');
-        $destination = $dir . '/client-logo.png';
+        $dir = public_path('images/logo');
+        $destination = $dir.'/client-logo.png';
 
         if (! file_exists($dir)) {
             mkdir($dir, 0755, true);

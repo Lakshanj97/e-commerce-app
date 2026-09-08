@@ -3,34 +3,42 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
+        // Reset cached roles and permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
         // Permissions
-        Permission::create(['name' => 'view products']);
-        Permission::create(['name' => 'create products']);
-        Permission::create(['name' => 'edit products']);
-        Permission::create(['name' => 'delete products']);
+        $permissions = [
+            'view products',
+            'create products',
+            'edit products',
+            'delete products',
+            'view orders',
+            'manage orders',
+            'manage users',
+        ];
 
-        Permission::create(['name' => 'view orders']);
-        Permission::create(['name' => 'manage orders']);
-
-        Permission::create(['name' => 'manage users']);
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
 
         // Roles
-        $superAdmin = Role::create(['name' => 'Super Admin']);
-        $admin = Role::create(['name' => 'Admin']);
-        $staff = Role::create(['name' => 'Staff']);
-        $customer = Role::create(['name' => 'Customer']);
+        $superAdmin = Role::firstOrCreate(['name' => 'Super Admin']);
+        $admin = Role::firstOrCreate(['name' => 'Admin']);
+        $staff = Role::firstOrCreate(['name' => 'Staff']);
+        $customer = Role::firstOrCreate(['name' => 'Customer']);
 
         // Assign permissions
-        $superAdmin->givePermissionTo(Permission::all());
+        $superAdmin->syncPermissions(Permission::all());
 
-        $admin->givePermissionTo([
+        $admin->syncPermissions([
             'view products',
             'create products',
             'edit products',
@@ -39,7 +47,7 @@ class RolePermissionSeeder extends Seeder
             'manage orders',
         ]);
 
-        $staff->givePermissionTo([
+        $staff->syncPermissions([
             'view products',
             'view orders',
             'manage orders',

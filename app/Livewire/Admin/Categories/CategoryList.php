@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Categories;
 
+use App\Models\Category;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Category;
 
 class CategoryList extends Component
 {
@@ -13,10 +13,11 @@ class CategoryList extends Component
     public string $search = '';
 
     public ?int $deleteId = null;
+
     public string $deleteName = '';
 
     protected $queryString = [
-        'search' => ['except' => '']
+        'search' => ['except' => ''],
     ];
 
     public function updatingSearch()
@@ -56,8 +57,7 @@ class CategoryList extends Component
             ->with('parent')
             ->when(
                 $this->search,
-                fn($query) =>
-                $query->where('name', 'like', '%' . $this->search . '%')
+                fn ($query) => $query->where('name', 'like', '%'.$this->search.'%')
             )
             ->latest()
             ->paginate(20);

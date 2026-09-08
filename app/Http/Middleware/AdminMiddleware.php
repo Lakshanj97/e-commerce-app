@@ -15,9 +15,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->is_admin) {
+        if (! auth()->check()) {
+            return redirect()->guest(route('login'))->with('error', 'Please log in to access the admin area.');
+        }
+
+        if (auth()->user()->is_admin) {
             return $next($request);
         }
-        return redirect('/');
+
+        return redirect()->route('home')->with('error', 'Unauthorized access.');
     }
 }

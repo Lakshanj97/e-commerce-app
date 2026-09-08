@@ -50,6 +50,23 @@
                     </select>
                 </div>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 mb-4 gap-4">
+                <div class="md:col-span-1">
+                    <x-common.admin.forms.input label="Brand Id" name="brand_id" type="number"
+                        wire:model.live="brand_id" required placeholder="e.g. 1" />
+                </div>
+                <div class="md:col-span-2">
+                    <label for="Brand Name"
+                        class="block text-sm font-medium mb-1.5 text-gray-700 dark:text-slate-300">Brand Name</label>
+                    <select name="brand_name" id="brand_name" wire:model.live="brand_id" required
+                        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 focus:shadow-blue-400 w-full px-3 py-2.5 shadow-xs placeholder:text-body">
+                        <option value="">Select a brand</option>
+                        @foreach ($brandList as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
             <div class="mb-4">
                 <div wire:ignore x-data="{ content: @entangle('short_description') }" x-init="$refs.trix_short_description.editor.loadHTML(content)"
                     @trix-change="content = $refs.trix_short_description.input.value" class="mb-4">

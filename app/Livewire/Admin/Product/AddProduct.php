@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Product;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -25,6 +26,10 @@ class AddProduct extends Component
     public int $category_id = 0;
 
     public $categories = [];
+
+    public int $brand_id = 0;
+
+    public $brandList = [];
 
     public float $original_price = 0;
 
@@ -68,9 +73,13 @@ class AddProduct extends Component
         // Load real categories from DB
         $this->categories = Category::all();
 
+        // Load brand list from DB
+        $this->brandList = Brand::all();
+
         if ($id) {
             $product = Product::findOrFail($id);
             $this->category_id = $product->category_id;
+            $this->brand_id = $product->brand_id;
         }
     }
 
@@ -106,6 +115,7 @@ class AddProduct extends Component
             'name' => 'required|string|max:255',
             'slug' => 'required|string|unique:products,slug,'.$this->productId,
             'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'original_price' => 'required|numeric|min:0',
@@ -128,6 +138,7 @@ class AddProduct extends Component
                 'name' => $this->name,
                 'slug' => $this->slug,
                 'category_id' => $this->category_id,
+                'brand_id' => $this->brand_id,
                 'short_description' => $this->short_description,
                 'description' => $this->description,
                 'original_price' => $this->original_price,

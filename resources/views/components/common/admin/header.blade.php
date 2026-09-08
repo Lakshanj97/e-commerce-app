@@ -8,14 +8,14 @@
         </button>
         
         <div class="hidden sm:block text-sm font-medium text-gray-500 dark:text-gray-400">
-            Welcome back, <span class="font-semibold text-gray-800 dark:text-slate-200">Admin</span>!
+            Welcome back, <span class="font-semibold text-gray-800 dark:text-slate-200">{{ auth()->user()->name ?? 'Admin' }}</span>!
         </div>
     </div>
 
     <div class="relative flex items-center space-x-4" x-data="{ userMenuOpen: false }">
         <button @click="userMenuOpen = !userMenuOpen" class="flex items-center space-x-2 rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-cyan-500 md:rounded-lg md:px-3 md:py-1.5 md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
-            <img class="h-8 w-8 rounded-full border border-gray-200 dark:border-slate-700 bg-gray-200" src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin">
-            <span class="hidden md:block text-sm font-medium text-gray-700 dark:text-slate-300">Admin Account</span>
+            <img class="h-8 w-8 rounded-full border border-gray-200 dark:border-slate-700 bg-gray-200" src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=0891b2&color=fff" alt="{{ auth()->user()->name ?? 'Admin' }}">
+            <span class="hidden md:block text-sm font-medium text-gray-700 dark:text-slate-300">{{ auth()->user()->name ?? 'Admin Account' }}</span>
             <svg class="hidden h-4 w-4 text-gray-500 dark:text-gray-400 md:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -32,12 +32,22 @@
              x-transition:leave-end="transform opacity-0 scale-95"
              style="display: none;">
             
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700/50">Your Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700/50">Settings</a>
+            <div class="px-4 py-2 text-xs text-gray-400 border-b border-gray-100 dark:border-slate-700">
+                <div class="font-medium text-gray-700 dark:text-slate-200 truncate">{{ auth()->user()->email ?? '' }}</div>
+                <div class="text-[11px] text-cyan-600 dark:text-cyan-400 mt-0.5">{{ auth()->user()->roles->first()?->name ?? 'Administrator' }}</div>
+            </div>
+
+            <a href="{{ route('admin.company-profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700/50">Company Profile</a>
+            <a href="{{ route('home') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700/50">View Storefront</a>
             
             <hr class="my-1 border-gray-200 dark:border-slate-700">
             
-            <button class="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-slate-700/50">Logout</button>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-slate-700/50">
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 </header>

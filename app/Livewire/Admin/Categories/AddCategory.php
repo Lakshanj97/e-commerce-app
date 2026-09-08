@@ -73,10 +73,10 @@ class AddCategory extends Component
                     ->whereNull('parent_id')
                     ->when(
                         $this->categoryId,
-                        fn($query) => $query->where('id', '!=', $this->categoryId)
+                        fn ($query) => $query->where('id', '!=', $this->categoryId)
                     )
                     ->orderBy('name')
-                    ->get()
+                    ->get(),
             ]
         )->layout('layouts.admin.app');
     }

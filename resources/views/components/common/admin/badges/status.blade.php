@@ -69,6 +69,41 @@
             'label' => 'Rejected',
         ],
 
+        'processing' => [
+            'bg' => 'bg-blue-100',
+            'text' => 'text-blue-800',
+            'dot' => 'bg-blue-500',
+            'label' => 'Processing',
+        ],
+
+        'completed' => [
+            'bg' => 'bg-green-100',
+            'text' => 'text-green-800',
+            'dot' => 'bg-green-500',
+            'label' => 'Completed',
+        ],
+
+        'cancelled' => [
+            'bg' => 'bg-red-100',
+            'text' => 'text-red-800',
+            'dot' => 'bg-red-500',
+            'label' => 'Cancelled',
+        ],
+
+        'paid' => [
+            'bg' => 'bg-emerald-100',
+            'text' => 'text-emerald-800',
+            'dot' => 'bg-emerald-500',
+            'label' => 'Paid',
+        ],
+
+        'failed' => [
+            'bg' => 'bg-rose-100',
+            'text' => 'text-rose-800',
+            'dot' => 'bg-rose-500',
+            'label' => 'Failed',
+        ],
+
     ];
 
     $current = $styles[strtolower($status)] ?? $styles['inactive'];
